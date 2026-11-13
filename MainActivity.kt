@@ -227,9 +227,8 @@ class MainActivity : Activity(), RecognitionListener {
             requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 2)
             reply("اجازهٔ دسترسی به مخاطبین را بده و دوباره بگو"); return null
         }
-        val P = ContactsContract.CommonDataKinds.Phone
         for (n in listOf(name, name.replace('ی', 'ي').replace('ک', 'ك'))) {
-            contentResolver.query(P.CONTENT_URI, arrayOf(P.NUMBER), P.DISPLAY_NAME + " LIKE ?", arrayOf("%$n%"), null)
+            contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER), ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " LIKE ?", arrayOf("%$n%"), null)
                 ?.use { if (it.moveToFirst()) return it.getString(0) }
         }
         reply("مخاطبی با نام «$name» پیدا نشد"); return null
